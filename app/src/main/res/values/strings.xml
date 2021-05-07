@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">Android Hub</string>
+    <string name="str_connect">Connect</string>
+    <string name="hint_enter_payload">Enter payload</string>
+    <string name="hint_enter_topic">Enter topic</string>
+    <string name="btn_publish">Publish</string>
+    <string name="btn_subscribe">Subscribe</string>
+    <string name="str_subscribe">Subscribe</string>
+    <string name="str_unsubscribe">Unsubscribe</string>
+    <string name="str_connected">Connected</string>
+    <string name="str_send">Send</string>
+    <string name="userName">Email</string>
+    <string name="userPassword">Password</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="hint_enter_ip">Enter Termux IP Address</string>
+    <string name="str_sub">Subscribe</string>
+    <string name="subscription_messages">Subscription Messages</string>
+    <string name="subscribed_to_topic">Subscribed to topic</string>
+    <string name="permission_read_phone_state_rationale">This applications needs to read phone state to connect</string>
+
+<!--    -->
+
+    <string name="permissions_not_granted_read_phone_state">Permission not granted</string>
+    //////////////////////////////////////////////
+    <string name="OK">OK</string>
+    <string name="GOT_IT">GOT IT</string>
+    <string name="YES">YES</string>
+    <string name="NO">NO</string>
+    <string name="SETTING">SETTING</string>
+    <string name="CANCEL">CANCEL</string>
+    <string name="CLOSE">CLOSE</string>
+    <string name="UPDATE">UPDATE</string>
+    <string name="DISMISS">DISMISS</string>
+    <string name="HIDE">HIDE</string>
+    <string name="RETRY">RETRY</string>
+    <string name="TRY_AGAIN">TRY AGAIN</string>
+    <string name="DETAILS">DETAILS</string>
+    <string name="FAILED">FAILED</string>
+    <string name="TYPE_SEARCH">SEARCH</string>
+    <string name="NO_IMAGE">NO IMAGE</string>
+    <string name="DELETE">DELETE</string>
+    <string name="DISCARD">DISCARD</string>
+    <string name="AGREE">AGREE</string>
+    <string name="DISAGREE">DISAGREE</string>
+    <string name="OPEN">OPEN</string>
+    <string name="SAVE">SAVE</string>
+    <string name="NEXT">NEXT</string>
+    <string name="BACK">BACK</string>
+    <string name="SKIP">SKIP</string>
+    <string name="message_test">Message will be here.</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>3
+
+</resources>
+

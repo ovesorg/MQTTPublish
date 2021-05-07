@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AndroidMqttHub">
+
+    <LinearLayout
+        android:id="@+id/switchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_large"
+                    android:layout_marginRight="@dimen/spacing_large"
+                    android:text="Local Broker Connection"
+                    android:textColor="@color/grey_800"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/localMqttSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_middle"
+                    android:checked="true"
+                    app:thumbTint="@color/green_500" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+<!--&lt;!&ndash;    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
+<!--&lt;!&ndash;        xmlns:app="http://schemas.android.com/apk/res-auto"&ndash;&gt;-->
+<!--&lt;!&ndash;        xmlns:tools="http://schemas.android.com/tools"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:theme="@style/MaterialTheme"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:cardCornerRadius="6dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        tools:context=".activities.MainActivity">&ndash;&gt;-->
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/connect_btn"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/btnConnect"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="16dp"-->
+<!--                    android:background="@color/colorPrimary"-->
+<!--                    android:onClick="onConnectClick"-->
+<!--                    android:text="@string/str_connect"-->
+<!--                    android:textColor="@android:color/white"-->
+<!--                    android:visibility="gone"/>-->
+
+<!--&lt;!&ndash;                <androidx.cardview.widget.CardView&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_margin="16dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_marginTop="5dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:elevation="16dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    app:cardCornerRadius="6dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    app:cardElevation="16dp">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <RelativeLayout&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginTop="10dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:padding="16dp">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <com.google.android.material.textfield.TextInputLayout&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:id="@+id/etTopic1"&ndash;&gt;-->
+<!--&lt;!&ndash;                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_margin="5dp">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                            <EditText&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:hint="@string/hint_enter_topic"&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:padding="16dp" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        </com.google.android.material.textfield.TextInputLayout>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <com.google.android.material.textfield.TextInputLayout&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:id="@+id/etPayLoad"&ndash;&gt;-->
+<!--&lt;!&ndash;                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_below="@+id/etTopic1"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_margin="5dp">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                            <EditText&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:hint="@string/hint_enter_payload"&ndash;&gt;-->
+<!--&lt;!&ndash;                                android:padding="16dp" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        </com.google.android.material.textfield.TextInputLayout>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <Button&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:id="@+id/pqs"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_below="@+id/etPayLoad"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_margin="5dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:background="@color/colorPrimary"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:text="@string/userPassword"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textColor="@android:color/white" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <Button&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:id="@+id/btnPublish"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_below="@+id/pqs"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_margin="5dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:background="@color/colorPrimary"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:onClick="onPublishClick"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:text="@string/str_send"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textColor="@android:color/white" />&ndash;&gt;-->
+<!--&lt;!&ndash;                    </RelativeLayout>&ndash;&gt;-->
+<!--&lt;!&ndash;                </androidx.cardview.widget.CardView>&ndash;&gt;-->
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/llPublish"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="16dp"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:elevation="16dp"-->
+<!--                    app:cardCornerRadius="6dp"-->
+<!--                    app:cardElevation="16dp"-->
+<!--                    android:visibility="gone">-->
+
+<!--                    <RelativeLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="16dp">-->
+
+<!--                        <com.google.android.material.textfield.TextInputLayout-->
+<!--                            android:id="@+id/etTopic"-->
+<!--                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="5dp"-->
+<!--                            android:layout_marginBottom="10dp">-->
+
+<!--                            <EditText-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:hint="@string/hint_enter_topic"-->
+<!--                                android:inputType="text"-->
+<!--                                android:padding="16dp" />-->
+
+<!--                        </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                        &lt;!&ndash;                <com.google.android.material.textfield.TextInputLayout&ndash;&gt;-->
+<!--                        &lt;!&ndash;                    android:id="@+id/etPayLoad"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                    android:layout_below="@+id/etTopic"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                    android:layout_margin="5dp"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                    android:layout_marginBottom="10dp">&ndash;&gt;-->
+
+<!--                        &lt;!&ndash;                    <EditText&ndash;&gt;-->
+<!--                        &lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                        android:hint="@string/hint_enter_payload"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                        android:padding="16dp" />&ndash;&gt;-->
+
+<!--                        &lt;!&ndash;                </com.google.android.material.textfield.TextInputLayout>&ndash;&gt;-->
+
+<!--                        <Button-->
+<!--                            android:id="@+id/btnSubscribe"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_below="@+id/etTopic"-->
+<!--                            android:layout_margin="5dp"-->
+<!--                            android:layout_marginBottom="10dp"-->
+<!--                            android:background="@color/colorPrimary"-->
+<!--                            android:onClick="onSubscribeClick"-->
+<!--                            android:text="@string/str_sub"-->
+<!--                            android:textColor="@android:color/white" />-->
+<!--                    </RelativeLayout>-->
+<!--                </androidx.cardview.widget.CardView>-->
+
+                <RelativeLayout
+                    android:id="@+id/topicRel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/switchLayout"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp">
+
+                    <TextView
+                        android:id="@+id/subscriptionHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="@string/subscription_messages"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/subscriptionHeader" />
+                </RelativeLayout>
+
+
+<!--            </LinearLayout>-->
+        </RelativeLayout>
+<!--    </ScrollView>-->
+
+<!--</RelativeLayout>-->
