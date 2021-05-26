@@ -43,7 +43,7 @@ If you have the Application apk file in your phone,
 #### Android Hub
 The next application you need to have installed is the Android Hub application
 You can find the project repository here [Android Hub App](https://github.com/ovesorg/mobapp-MQTT-AndroidHub.git)
-NB/ This application serves as the subscriber to the Mqtt server as the MqttPublish serves as the publisher.
+NB/ This application serves as the subscriber to the Local Mqtt server as the MqttPublish serves as the publisher.
 
 #### Test Scenario
 NB/ To test this application you need to have Termux and Android Hub applications installed on your device first.
@@ -53,7 +53,7 @@ This can ONLY happen when the MQTT server is running in the background and for t
 For you to initialize mosquitto, check installing Termux point number 7.
  #### Steps to achieve our goal
   1. Run Mosquitto on termux
-  2. Open MqttSubscribe application and type a topic you want to subscribe to eg Sensors/Bulb1
+  2. Open Android Hub application and type a topic you want to subscribe to eg Sensors/Bulb1
   3. Click the subscribe button
   4. Open for example the device scanner application and get device or plug in the USB OTG cable to the device and once done scanning see the data on the Android Hub application.
   5. Navigate back to the Android Hub application and you should be able to see the message data posted.

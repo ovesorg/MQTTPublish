@@ -3,6 +3,7 @@ plugins {
 }
 apply plugin: 'kotlin-android'
 apply plugin: "com.apollographql.apollo"
+apply plugin: 'com.amplifyframework.amplifytools'
 
 android {
     compileSdkVersion 30

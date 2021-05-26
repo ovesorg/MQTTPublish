@@ -154,6 +154,9 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
 
         //Init ArrayList
         topicMessageModels = new ArrayList<>();
+
+        //Add object to a set
+        topicModelSet = new HashSet<>();
         setUpAdapter();
 
 //        StartLocalMQTTConnection();
@@ -191,7 +194,7 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
                 if (isRemoteMQTTConnected) {
                     Timber.e("syncToRemote1: %s", true);
                     Toasty.success(getApplicationContext(), " Sync started...", Toast.LENGTH_SHORT).show();
-                    checkTopicModelList();
+//                    checkTopicModelList();
                 }
                 else {
                     Timber.e("Not is Remote Connected");
@@ -347,7 +350,12 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-//                topicMessageModels.clear();
+                /**
+                 * TODO Figure out if i can get a the device that sent the message from termux or use
+                 * the clientID in the app sending the message and append it to the message being sent
+                 * to the local broker then filter the data when sending to the remote broker on the
+                 * AndroidHub.
+                 */
                 Gson json = new Gson();
                 byte[] encodedPayload;
 
@@ -356,9 +364,15 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
                 topicData = topicMessageModel.getTopic();
                 messageData = topicMessageModel.getMessage();
 
-                //Add object to a set
-                topicModelSet = new HashSet<>();
-                topicModelSet.add(topicMessageModel);
+                if (!topicModelSet.isEmpty()){
+                    //TODO list of topic models to iterate on in the recyclerView
+                    topicModelSet.add(topicMessageModel);
+                    Toasty.normal(getApplicationContext(), "1. " + topicModelSet.iterator().next(), Toasty.LENGTH_LONG).show();
+                } else {
+                    topicModelSet.clear();
+                    topicModelSet.add(topicMessageModel);
+                    Toasty.normal(getApplicationContext(), "2. " + topicModelSet.iterator().next(), Toasty.LENGTH_LONG).show();
+                }
 
                 //Add to List
                 topicMessageModels.add(topicMessageModel);
@@ -421,7 +435,7 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
                 isRemoteMQTTConnected = true;
                 remoteStatus.setText("Connected");
                 remoteSwitch.setChecked(true);
-//                checkTopicModelList();
+                checkTopicModelList();
                 Toasty.success(getApplicationContext(), "Remote Client Connected", Toasty.LENGTH_SHORT).show();
             }
 
@@ -572,15 +586,16 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
                 TopicMessageModel model = topicMessageModels.get(i);
                 String topic = model.getTopic();
                 String message = model.getMessage();
-//                message = String.valueOf(1000);
                 Gson json = new Gson();
                 String jsonData = json.toJson(message);
 
 //                try {
                 //TODO: Get device IMEI
                 imei = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-                Toasty.success(getApplicationContext(), "JSON DATA: " + jsonData, Toasty.LENGTH_SHORT).show();
+                Toasty.success(getApplicationContext(), "JSON DATA: " +  jsonData, Toasty.LENGTH_SHORT).show();
                 Timber.e("JSON DATA: %s", jsonData);
+
+                //Post Data in the declared format and standard set as https://github.com/ovesorg/protocol-IoT-GATT
 //                    iMqttToken = mqttAndroidClientRemote.publish("dt/ov01/OVCAMP/12345/303AH1900000300/cv_1/" , new MqttMessage(jsonData.getBytes()));
 //                    iMqttToken.setActionCallback(new IMqttActionListener() {
 //                        @Override
