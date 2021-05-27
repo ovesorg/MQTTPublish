@@ -19,6 +19,37 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
+      - name: use node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{ matrix.node-version }}
+
+            - name: configure amplify
+              uses: ambientlight/amplify-cli-action@0.2.2
+              with:
+                amplify_command: configure
+                amplify_env: dev
+              env:
+                AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                AWS_REGION: us-east-1
+
+            - name: install, build and test
+              run: |
+                npm install
+                # build and test
+                # npm run build
+                # npm run test
+
+            - name: deploy
+              uses: ambientlight/amplify-cli-action@0.2.2
+              with:
+                amplify_command: publish
+                amplify_env: dev
+              env:
+                AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                AWS_REGION: ap-southeast-1
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.2
         with:
