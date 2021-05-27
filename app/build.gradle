@@ -3,7 +3,7 @@ plugins {
 }
 apply plugin: 'kotlin-android'
 apply plugin: "com.apollographql.apollo"
-apply plugin: 'com.amplifyframework.amplifytools'
+//apply plugin: 'com.amplifyframework.amplifytools'
 
 android {
     compileSdkVersion 30
@@ -83,10 +83,11 @@ dependencies {
     implementation 'com.graphql-java:graphql-java:16.2'
     implementation 'androidx.preference:preference:1.1.1'
 
-    implementation 'com.amplifyframework:aws-api:1.17.1'
-    implementation 'com.amplifyframework:aws-datastore:1.17.1'
+//    implementation 'com.amplifyframework:aws-api:1.17.1'
+//    implementation 'com.amplifyframework:aws-datastore:1.17.1'
     implementation "org.jetbrains:annotations:20.1.0"
     testImplementation "org.jetbrains:annotations:20.1.0"
     implementation 'org.greenrobot:eventbus:3.2.0'
     implementation 'com.balysv:material-ripple:1.0.2'
+    implementation 'com.google.code.gson:gson:2.8.6'
 }

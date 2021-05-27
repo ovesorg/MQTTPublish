@@ -1,9 +1,0 @@
-mutation SignInMutation($email: String!, $password: String!){
-    signInLoginUser(signInCredentials:{
-        email: $email,
-        password: $password
-    }
-    ){
-        accessToken
-    }
-}
