@@ -4,53 +4,97 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+    
 jobs:
-  build:
+  test:
+    name: test amplify-cli-action
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14]
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2.3.4
-      - name: Setup JDK
-        uses: actions/setup-java@v1.4.3
-        with:
-          java-version: 1.8
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Build with Gradle
-        run: ./gradlew build
-      - name: use node.js ${{ matrix.node-version }}
-      - name: configure amplify
-         uses: actions/setup-node@v1
-          with:
-            node-version: ${{ matrix.node-version }}
-        uses: ambientlight/amplify-cli-action@0.2.2
-        with:
-          amplify_command: configure
-          amplify_env: dev
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
+    - uses: actions/checkout@v1
 
-      - name: install, build and test
-        run: |
-          npm install
-          # build and test
-          # npm run build
-          # npm run test
+    - name: use node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
 
-      - name: deploy
-        uses: ambientlight/amplify-cli-action@0.2.2
-        with:
-          amplify_command: publish
-          amplify_env: dev
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ap-southeast-1
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v2.2.2
-        with:
-          name: AndroidHub
-          path: app/build/outputs/apk/debug/app-debug.apk
+    - name: configure amplify
+      uses: ambientlight/amplify-cli-action@0.2.2
+      with:
+        amplify_command: configure
+        amplify_env: dev
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ap-southeast-1
+
+    - name: install, build and test
+      run: |
+        npm install
+        # build and test
+        # npm run build
+        # npm run test
+    
+    - name: deploy
+      uses: ambientlight/amplify-cli-action@0.2.2
+      with:
+        amplify_command: publish
+        amplify_env: dev
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ap-southeast-1
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2.3.4
+#       - name: Setup JDK
+#         uses: actions/setup-java@v1.4.3
+#         with:
+#           java-version: 1.8
+#       - name: Grant execute permission for gradlew
+#         run: chmod +x gradlew
+#       - name: Build with Gradle
+#         run: ./gradlew build
+#       - name: use node.js ${{ matrix.node-version }}
+#       - name: configure amplify
+#          uses: actions/setup-node@v1
+#           with:
+#             node-version: ${{ matrix.node-version }}
+#         uses: ambientlight/amplify-cli-action@0.2.2
+#         with:
+#           amplify_command: configure
+#           amplify_env: dev
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_REGION: us-east-1
+
+#       - name: install, build and test
+#         run: |
+#           npm install
+#           # build and test
+#           # npm run build
+#           # npm run test
+
+#       - name: deploy
+#         uses: ambientlight/amplify-cli-action@0.2.2
+#         with:
+#           amplify_command: publish
+#           amplify_env: dev
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_REGION: ap-southeast-1
+#       - name: Upload a Build Artifact
+#         uses: actions/upload-artifact@v2.2.2
+#         with:
+#           name: AndroidHub
+#           path: app/build/outputs/apk/debug/app-debug.apk
