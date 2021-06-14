@@ -63,7 +63,7 @@ jobs:
           APPLICATION_NAME: ${{ env.APPLICATION_NAME }}
           S3_BUCKET: ${{ env.S3_BUCKET }}
           COMMAND: "upload"
-          ZIP_FILE: "build.zip"
+          ZIP_FILE: "app/build/outputs/apk/debug/build.zip"
       - name: Deploy
         id: deploy
         uses: Lishenga/aws-code-deploy@v1
