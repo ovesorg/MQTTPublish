@@ -596,23 +596,26 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
                 Timber.e("JSON DATA: %s", jsonData);
 
                 //Post Data in the declared format and standard set as https://github.com/ovesorg/protocol-IoT-GATT
-//                    iMqttToken = mqttAndroidClientRemote.publish("dt/ov01/OVCAMP/12345/303AH1900000300/cv_1/" , new MqttMessage(jsonData.getBytes()));
-//                    iMqttToken.setActionCallback(new IMqttActionListener() {
-//                        @Override
-//                        public void onSuccess(IMqttToken asyncActionToken) {
-//                            Timber.e("Successfully Posted the data");
-//                        }
-//
-//                        @Override
-//                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//                            Timber.e("Failed to post data");
-//                        }
-//                    });
-//                }
+                try {
 
-//                catch (MqttException e) {
-//                    e.printStackTrace();
-//                }
+                    iMqttToken = mqttAndroidClientRemote.publish(topic, new MqttMessage(message.getBytes()));
+//                    iMqttToken = mqttAndroidClientRemote.publish("dt/ov01/OVCAMP/12345/303AH1900000300/cv_1/" , new MqttMessage(jsonData.getBytes()));
+                    iMqttToken.setActionCallback(new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            Timber.e("Successfully Published the data");
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            Timber.e("Failed to Publish data");
+                        }
+                    });
+                }
+
+                catch (MqttException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
