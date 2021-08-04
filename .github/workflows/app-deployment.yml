@@ -48,10 +48,14 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build
+          mv rename.sh app/build/outputs/apk/debug/
           mv scripts app/build/outputs/apk/debug/
           mv appspec.yml app/build/outputs/apk/debug/
           cd app/build/outputs/apk/debug/
-          zip -r build.zip appspec.yml scripts app-debug.apk
+          ./rename.sh
+          ls
+          zip -r build.zip .
+          ls
 
       - name: Upload
         id: upload
