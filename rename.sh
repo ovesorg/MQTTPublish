@@ -5,7 +5,7 @@ b=$RANDOM
 c="${a}${b}"
 
 for f in *.apk; do
-    mv -- "$f" "${c}.apk"
+    mv -- "$f" "mobapp-MQTT-AndroidHub.apk"
 done
 
 # cd $1
