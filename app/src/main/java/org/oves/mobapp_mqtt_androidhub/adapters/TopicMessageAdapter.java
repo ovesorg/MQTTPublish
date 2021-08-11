@@ -38,7 +38,7 @@ public class TopicMessageAdapter extends RecyclerView.Adapter<TopicMessageAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TopicMessageModel topicMessageModel = topicMessageModelList.get(position);
         holder.topic.setText(topicMessageModel.getTopic());
-        holder.message.setText(topicMessageModel.getMessage());
+        holder.message.setText(String.valueOf(topicMessageModel.getMessage()));
 
         //Set Tags
         holder.itemView.setTag(topicMessageModel);
@@ -54,7 +54,7 @@ public class TopicMessageAdapter extends RecyclerView.Adapter<TopicMessageAdapte
         TopicMessageModel topicMessageModel = (TopicMessageModel) view.getTag();
         String topicMessage = topicMessageModel.getMessage();
         //Toast
-        Toasty.success(context.getApplicationContext(), topicMessage, Toasty.LENGTH_SHORT).show();
+        Toasty.success(context.getApplicationContext(), String.valueOf(topicMessage), Toasty.LENGTH_SHORT).show();
     }
 
     //ViewHolder

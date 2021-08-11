@@ -16,6 +16,7 @@ import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,7 +92,7 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
     private final ServiceConnection remoteBroadcastReceiver = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Toasty.success(getApplicationContext(), "Remote Client Connected", Toasty.LENGTH_SHORT).show();
+//            Toasty.success(getApplicationContext(), "Remote Client Connected", Toasty.LENGTH_SHORT).show();
             RemoteBrokerService.RemoteBrokerBinder binder = (RemoteBrokerService.RemoteBrokerBinder) service;
             remoteBrokerService = binder.getService();
             if (remoteBrokerService.getConnectedStatus()) {
@@ -100,7 +101,7 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
                 Toasty.success(getApplicationContext(), "Remote Client Service Connected status " + remoteBrokerService.getConnectedStatus(), Toasty.LENGTH_LONG).show();
             } else {
                 Timber.e("MqttService Connection Status: %s", remoteBrokerService.getConnectedStatus());
-                Toasty.success(getApplicationContext(), "Remote Client Service Connected status else " + remoteBrokerService.getConnectedStatus(), Toasty.LENGTH_LONG).show();
+//                Toasty.success(getApplicationContext(), "Remote Client Service Connected status else " + remoteBrokerService.getConnectedStatus(), Toasty.LENGTH_LONG).show();
             }
 
         }
@@ -110,6 +111,7 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
             Toasty.success(getApplicationContext(), "Remote Client Disconnected", Toasty.LENGTH_SHORT).show();
         }
     };
+    private LinearLayout localClientIndicator, remoteClientIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +142,8 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
         localSwitch = findViewById(R.id.localSwitch);
         remoteStatus = findViewById(R.id.remoteStatus);
         localStatus = findViewById(R.id.localStatus);
+        localClientIndicator = findViewById(R.id.localClientIndicator);
+        remoteClientIndicator = findViewById(R.id.remoteClientIndicator); //#4fcc06
 //        clientId = imei + "-" + Constants.MQTT_CLIENT_ID;
         clientId = Constants.MQTT_CLIENT_ID;
 
@@ -189,18 +193,25 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
 //                checkLocalSwitch();
 //                break;
             case R.id.syncToRemote:
-                checkRemoteSwitch();
+                CheckRemote();
 
                 if (isRemoteMQTTConnected) {
                     Timber.e("syncToRemote1: %s", true);
-                    Toasty.success(getApplicationContext(), " Sync started...", Toast.LENGTH_SHORT).show();
-//                    checkTopicModelList();
+                    checkTopicModelList();
+                    if (topicMessageModels.size() > 0){
+                        startSyncProgress();
+                    }
                 }
                 else {
-                    Timber.e("Not is Remote Connected");
+                    Timber.e("Remote Client Not Connected");
                 }
                 break;
         }
+    }
+
+    private void startSyncProgress() {
+        // Start sync process
+        Toasty.success(getApplicationContext(), "Start Sync Progress ", Toasty.LENGTH_SHORT).show();
     }
 
     //Check Remote connection
@@ -596,23 +607,26 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
                 Timber.e("JSON DATA: %s", jsonData);
 
                 //Post Data in the declared format and standard set as https://github.com/ovesorg/protocol-IoT-GATT
-//                    iMqttToken = mqttAndroidClientRemote.publish("dt/ov01/OVCAMP/12345/303AH1900000300/cv_1/" , new MqttMessage(jsonData.getBytes()));
-//                    iMqttToken.setActionCallback(new IMqttActionListener() {
-//                        @Override
-//                        public void onSuccess(IMqttToken asyncActionToken) {
-//                            Timber.e("Successfully Posted the data");
-//                        }
-//
-//                        @Override
-//                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-//                            Timber.e("Failed to post data");
-//                        }
-//                    });
-//                }
+                try {
 
-//                catch (MqttException e) {
-//                    e.printStackTrace();
-//                }
+                    iMqttToken = mqttAndroidClientRemote.publish(topic, new MqttMessage(message.getBytes()));
+//                    iMqttToken = mqttAndroidClientRemote.publish("dt/ov01/OVCAMP/12345/303AH1900000300/cv_1/" , new MqttMessage(jsonData.getBytes()));
+                    iMqttToken.setActionCallback(new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            Timber.e("Successfully Published the data");
+                        }
+
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                            Timber.e("Failed to Publish data");
+                        }
+                    });
+                }
+
+                catch (MqttException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -621,17 +635,17 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
 
     private void checkRemoteSwitch() {
         if(remoteSwitch.isChecked()){
-            Toasty.error(getApplicationContext(), "Remote Switch: Checked",Toasty.LENGTH_SHORT).show();
+//            Toasty.success(getApplicationContext(), "Remote Switch: Checked",Toasty.LENGTH_SHORT).show();
             StartRemoteProcess();
             if (isRemoteMQTTConnected){
-                Toasty.error(getApplicationContext(), "Remote Switch: isRemoteMQTTConnected",Toasty.LENGTH_SHORT).show();
+//                Toasty.success(getApplicationContext(), "Remote Switch: isRemoteMQTTConnected",Toasty.LENGTH_SHORT).show();
                 if (mqttAndroidClientRemote != null) {
-                    Toasty.error(getApplicationContext(), "Remote Switch: mqttAndroidClientRemote != null 1",Toasty.LENGTH_SHORT).show();
+//                    Toasty.success(getApplicationContext(), "Remote Switch: mqttAndroidClientRemote != null 1",Toasty.LENGTH_SHORT).show();
                     if (remoteSwitch.isChecked()) {
-                        Timber.e("Connected and remote switch checked");
-                        Timber.e("isRemoteMQTTConnected: %s", isRemoteMQTTConnected);
-                        Timber.e("mqttAndroidClientRemote.isConnected() : %s", mqttAndroidClientRemote.isConnected());
-                        Toasty.error(getApplicationContext(), "Remote Switch: remoteSwitch.isChecked()",Toasty.LENGTH_SHORT).show();
+//                        Timber.e("Connected and remote switch checked");
+//                        Timber.e("isRemoteMQTTConnected: %s", isRemoteMQTTConnected);
+//                        Timber.e("mqttAndroidClientRemote.isConnected() : %s", mqttAndroidClientRemote.isConnected());
+                        Toasty.success(getApplicationContext(), "Remote broker connected",Toasty.LENGTH_SHORT).show();
                         remoteSwitch.setChecked(true);
                         remoteStatus.setText("Connecting");
                     }
@@ -659,11 +673,11 @@ public class RemoteLocalMergeActivity extends AppCompatActivity implements View.
                 }
             }
             else {
-                Toasty.error(getApplicationContext(), "Remote Switch: NOT isRemoteMQTTConnected",Toasty.LENGTH_SHORT).show();
-                Timber.e("Disconnecting Remote broker");
-                Timber.e("Not Connected");
-                Timber.e("isRemoteMQTTConnected: %s", isRemoteMQTTConnected);
-                Timber.e("mqttAndroidClientRemote.isConnected() : %s", mqttAndroidClientRemote.isConnected());
+                Toasty.error(getApplicationContext(), "Remote broker Not connected",Toasty.LENGTH_SHORT).show();
+//                Timber.e("Disconnecting Remote broker");
+//                Timber.e("Not Connected");
+//                Timber.e("isRemoteMQTTConnected: %s", isRemoteMQTTConnected);
+//                Timber.e("mqttAndroidClientRemote.isConnected() : %s", mqttAndroidClientRemote.isConnected());
                 remoteSwitch.setChecked(false);
                 remoteStatus.setText("Connect");
             }
