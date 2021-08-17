@@ -1,0 +1,86 @@
+name: AndroidHub CI
+on:
+  push:
+    branches: [ master, app-deployment ]
+  pull_request:
+    branches: [ master, app-deployment ]
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.DEV_CODEDEPLOY_AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_CODEDEPLOY_AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: eu-central-1
+  S3_BUCKET: ${{ secrets.DEV_CODEDEPLOY_S3_BUCKET }}
+  APPLICATION_NAME: ${{ secrets.APPLICATION_NAME }} 
+  DEPLOYMENT_GROUP: ${{ secrets.DEV_DEPLOYMENT_GROUP }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      # - name: Setup JDK
+      #   uses: actions/setup-java@v1.4.3
+      #   with:
+      #     java-version: 1.8
+      # - name: Grant execute permission for gradlew
+      #   run: chmod +x gradlew
+      # - name: Build with Gradle
+      #   run: ./gradlew build
+      # - name: Upload a Build Artifact
+      #   uses: actions/upload-artifact@v2.2.2
+      #   with:
+      #     name: AndroidHub App
+      #     path: app/build/outputs/apk/debug/app-debug.apk
+
+  build-push-image-and-codedeploy:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup JDK
+      #   uses: actions/setup-java@v1.4.3
+        uses: actions/setup-java@v1.4.3
+        with:
+          java-version: 1.8
+      - name: Zip App
+        run: |
+          chmod +x gradlew
+          ./gradlew build
+          mv rename.sh app/build/outputs/apk/debug/
+          mv scripts app/build/outputs/apk/debug/
+          mv appspec.yml app/build/outputs/apk/debug/
+          cd app/build/outputs/apk/debug/
+          ./rename.sh
+          ls
+          zip -r build.zip .
+          ls
+
+      - name: Upload
+        id: upload
+        uses: Lishenga/aws-code-deploy@v1
+        with: 
+          AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          APPLICATION_NAME: ${{ env.APPLICATION_NAME }}
+          S3_BUCKET: ${{ env.S3_BUCKET }}
+          COMMAND: "upload"
+          ZIP_FILE: "app/build/outputs/apk/debug/build.zip"
+      - name: Deploy
+        id: deploy
+        uses: Lishenga/aws-code-deploy@v1
+        with:
+          AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          APPLICATION_NAME: ${{ env.APPLICATION_NAME }}
+          DEPLOYMENT_GROUP: ${{ env.DEPLOYMENT_GROUP }}
+          S3_BUCKET: ${{ env.S3_BUCKET }}
+          COMMAND: "deploy"
+          WAIT: "true"
+          IGNORE_APPLICATION_STOP_FAILURES: "true"
+          FILE_EXISTS_BEHAVIOR: "OVERWRITE"
