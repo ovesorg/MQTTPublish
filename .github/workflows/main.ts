@@ -1,9 +1,9 @@
 // name: AndroidHub CI
 // on:
 //   push:
-//     branches: [ master ]
+//     branches: [ master, app-deployment ]
 //   pull_request:
-//     branches: [ master ]
+//     branches: [ master, app-deployment ]
 
 // jobs:
 //   build:
