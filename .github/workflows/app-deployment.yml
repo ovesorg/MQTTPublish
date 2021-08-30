@@ -1,7 +1,7 @@
 name: AndroidHub CI
 on:
   push:
-    branches: [ app-deployment ]
+    branches: [ app-deployment, master ]
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.DEV_CODEDEPLOY_AWS_ACCESS_KEY_ID }}
